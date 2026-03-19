@@ -1,0 +1,40 @@
+name: Bug Report
+description: Something isn't working correctly
+labels: ['bug']
+body:
+  - type: input
+    id: wordpress-version
+    attributes:
+      label: WordPress Version
+    validations:
+      required: true
+  - type: input
+    id: php-version
+    attributes:
+      label: PHP Version
+    validations:
+      required: true
+  - type: input
+    id: plugin-version
+    attributes:
+      label: WP Vibe Version
+    validations:
+      required: true
+  - type: input
+    id: ai-provider
+    attributes:
+      label: AI Provider
+      description: Anthropic, OpenAI, WP Vibe Credits, etc.
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Include any error messages from the browser console or PHP error log
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+    validations:
+      required: true

@@ -1,0 +1,61 @@
+# Copyright (C) 2026 WPVibe
+# This file is distributed under the same license as the WPVibe plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: WPVibe 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wpvibe.io/support\n"
+"POT-Creation-Date: 2026-03-05 00:00+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2026-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: wpvibe.php
+msgid "WPVibe — AI Theme Generator"
+msgstr ""
+
+#: includes/class-wpvibe.php
+msgid "Theme Editor"
+msgstr ""
+
+#: includes/class-wpvibe.php
+msgid "Settings"
+msgstr ""
+
+#: includes/class-wpvibe.php
+msgid "Theme History"
+msgstr ""
+
+#: includes/class-wpvibe.php
+msgid "Help & Docs"
+msgstr ""
+
+#: admin/partials/onboarding-page.php
+msgid "Welcome to WPVibe"
+msgstr ""
+
+#: admin/partials/onboarding-page.php
+msgid "Get API Key from WPVibe Portal"
+msgstr ""
+
+#: admin/partials/onboarding-page.php
+msgid "I Have My Own API Key"
+msgstr ""
+
+#: admin/partials/settings-page.php
+msgid "API Configuration"
+msgstr ""
+
+#: admin/partials/settings-page.php
+msgid "Test Connection"
+msgstr ""
+
+#: includes/class-vb-rest-api.php
+msgid "Invalid API key type configured."
+msgstr ""
+
+#: includes/class-vb-rest-api.php
+msgid "API key validated successfully."
+msgstr ""

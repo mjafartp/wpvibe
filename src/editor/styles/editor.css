@@ -1,0 +1,381 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------------
+ * Editor Root — Full screen override of WP admin chrome
+ * --------------------------------------------------------------------------- */
+
+#wpvibe-editor-root {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #1d2327;
+  background: #f0f0f1;
+}
+
+/* Hide the WP admin bar when the editor is open */
+#wpvibe-editor-root ~ #wpadminbar,
+body.wpvibe-editor-active #wpadminbar {
+  display: none !important;
+}
+
+/* ---------------------------------------------------------------------------
+ * Typing indicator — three bouncing dots
+ * --------------------------------------------------------------------------- */
+
+.vb-typing-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 0;
+}
+
+.vb-typing-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #94a3b8;
+  animation: vb-typing-bounce 1.4s infinite ease-in-out both;
+}
+
+.vb-typing-dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.vb-typing-dot:nth-child(2) {
+  animation-delay: 0.16s;
+}
+
+.vb-typing-dot:nth-child(3) {
+  animation-delay: 0.32s;
+}
+
+@keyframes vb-typing-bounce {
+  0%,
+  80%,
+  100% {
+    transform: scale(0.6);
+    opacity: 0.4;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Blinking cursor for streaming messages
+ * --------------------------------------------------------------------------- */
+
+.vb-streaming-cursor::after {
+  content: '\2588'; /* Full block character */
+  display: inline;
+  animation: vb-blink 1s step-end infinite;
+  color: #6366f1;
+  font-weight: 400;
+  margin-left: 1px;
+}
+
+@keyframes vb-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Code block styles
+ * --------------------------------------------------------------------------- */
+
+.vb-code-block {
+  position: relative;
+  margin: 8px 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.vb-code-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 12px;
+  background: #1e293b;
+  color: #94a3b8;
+  font-size: 12px;
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas,
+    'Liberation Mono', monospace;
+}
+
+.vb-code-block pre {
+  margin: 0;
+  padding: 12px 16px;
+  background: #0f172a;
+  color: #e2e8f0;
+  font-size: 13px;
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas,
+    'Liberation Mono', monospace;
+  line-height: 1.6;
+  overflow-x: auto;
+  white-space: pre;
+  tab-size: 2;
+}
+
+.vb-code-block code {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.vb-copy-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border: 1px solid #334155;
+  border-radius: 4px;
+  background: transparent;
+  color: #94a3b8;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.vb-copy-button:hover {
+  background: #334155;
+  color: #e2e8f0;
+}
+
+.vb-copy-button:active {
+  background: #475569;
+}
+
+/* ---------------------------------------------------------------------------
+ * Inline code
+ * --------------------------------------------------------------------------- */
+
+.vb-inline-code {
+  display: inline;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: #f1f5f9;
+  color: #be185d;
+  font-size: 0.9em;
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas,
+    'Liberation Mono', monospace;
+}
+
+/* Inside assistant bubbles (which have a light bg), darken the inline code bg slightly */
+.vb-message-assistant .vb-inline-code {
+  background: #e2e8f0;
+}
+
+/* ---------------------------------------------------------------------------
+ * Scrollbar styling (Webkit / Chromium)
+ * --------------------------------------------------------------------------- */
+
+#wpvibe-editor-root ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+#wpvibe-editor-root ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#wpvibe-editor-root ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+#wpvibe-editor-root ::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* ---------------------------------------------------------------------------
+ * Textarea autogrow helper
+ * --------------------------------------------------------------------------- */
+
+.vb-textarea-wrap {
+  position: relative;
+}
+
+.vb-textarea-wrap textarea {
+  resize: none;
+  field-sizing: content; /* Modern browsers */
+}
+
+/* ---------------------------------------------------------------------------
+ * Message content rendering
+ * --------------------------------------------------------------------------- */
+
+.vb-message-content p {
+  margin: 0 0 8px;
+}
+
+.vb-message-content p:last-child {
+  margin-bottom: 0;
+}
+
+.vb-message-content strong {
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------------------------------
+ * Session dropdown
+ * --------------------------------------------------------------------------- */
+
+.vb-sessions-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 50;
+  min-width: 240px;
+  max-height: 320px;
+  overflow-y: auto;
+  margin-top: 4px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+/* ---------------------------------------------------------------------------
+ * Error banner
+ * --------------------------------------------------------------------------- */
+
+.vb-error-banner {
+  animation: vb-slide-down 0.2s ease-out;
+}
+
+@keyframes vb-slide-down {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Toast notification — slide up from bottom
+ * --------------------------------------------------------------------------- */
+
+.vb-animate-slide-up {
+  animation: vb-slide-up 0.3s ease-out;
+}
+
+@keyframes vb-slide-up {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Preview Panel — iFrame container and viewport transitions
+ * --------------------------------------------------------------------------- */
+
+/* ---------------------------------------------------------------------------
+ * Prism.js — One Dark theme tokens (scoped to code editor)
+ * --------------------------------------------------------------------------- */
+
+.vb-code-editor-area .token.comment,
+.vb-code-editor-area .token.prolog,
+.vb-code-editor-area .token.doctype,
+.vb-code-editor-area .token.cdata { color: #8b949e; font-style: italic; }
+
+.vb-code-editor-area .token.punctuation { color: #c9d1d9; }
+
+.vb-code-editor-area .token.property,
+.vb-code-editor-area .token.tag,
+.vb-code-editor-area .token.boolean,
+.vb-code-editor-area .token.number,
+.vb-code-editor-area .token.constant,
+.vb-code-editor-area .token.symbol { color: #79c0ff; }
+
+.vb-code-editor-area .token.selector,
+.vb-code-editor-area .token.attr-name,
+.vb-code-editor-area .token.string,
+.vb-code-editor-area .token.char,
+.vb-code-editor-area .token.builtin { color: #a5d6ff; }
+
+.vb-code-editor-area .token.operator,
+.vb-code-editor-area .token.entity,
+.vb-code-editor-area .token.url,
+.vb-code-editor-area .language-css .token.string,
+.vb-code-editor-area .style .token.string { color: #ff7b72; }
+
+.vb-code-editor-area .token.atrule,
+.vb-code-editor-area .token.attr-value,
+.vb-code-editor-area .token.keyword { color: #ff7b72; }
+
+.vb-code-editor-area .token.function,
+.vb-code-editor-area .token.class-name { color: #d2a8ff; }
+
+.vb-code-editor-area .token.regex,
+.vb-code-editor-area .token.important,
+.vb-code-editor-area .token.variable { color: #ffa657; }
+
+.vb-code-editor-area .token.important,
+.vb-code-editor-area .token.bold { font-weight: bold; }
+
+.vb-code-editor-area .token.italic { font-style: italic; }
+
+/* CSS-specific: property names */
+.vb-code-editor-area .language-css .token.property { color: #79c0ff; }
+.vb-code-editor-area .language-css .token.selector { color: #7ee787; }
+
+/* PHP-specific */
+.vb-code-editor-area .language-php .token.variable { color: #ffa657; }
+
+/* ---------------------------------------------------------------------------
+ * Code Editor — dark theme scrollbars
+ * --------------------------------------------------------------------------- */
+
+.vb-code-editor-dark ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.vb-code-editor-dark ::-webkit-scrollbar-track {
+  background: #0d1117;
+}
+
+.vb-code-editor-dark ::-webkit-scrollbar-thumb {
+  background: #30363d;
+  border-radius: 4px;
+}
+
+.vb-code-editor-dark ::-webkit-scrollbar-thumb:hover {
+  background: #484f58;
+}
+
+.vb-code-editor-dark ::-webkit-scrollbar-corner {
+  background: #0d1117;
+}
+
+.vb-preview-iframe-container {
+  max-width: 100%;
+  transition: width 0.3s ease-in-out;
+}
+
+.vb-preview-iframe-container iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}

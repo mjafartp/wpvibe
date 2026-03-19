@@ -1,0 +1,157 @@
+/**
+ * WPVibe admin styles.
+ * Scoped under .wpvibe-admin to avoid WP conflicts.
+ */
+
+/* --- Onboarding Wizard --- */
+
+.vb-onboarding-container {
+	max-width: 640px;
+	margin: 40px auto;
+	padding: 40px;
+	background: #fff;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.vb-step-header {
+	text-align: center;
+	margin-bottom: 32px;
+}
+
+.vb-step-header h1 {
+	font-size: 28px;
+	font-weight: 600;
+	color: #1d2327;
+	margin-bottom: 8px;
+}
+
+.vb-step-header h2 {
+	font-size: 22px;
+	font-weight: 600;
+	color: #1d2327;
+	margin-bottom: 8px;
+}
+
+.vb-step-header p {
+	font-size: 15px;
+	color: #646970;
+	max-width: 480px;
+	margin: 0 auto;
+}
+
+.vb-step-actions {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 12px;
+}
+
+.vb-step-actions .button-hero {
+	min-width: 320px;
+	text-align: center;
+}
+
+.vb-or {
+	color: #888;
+	font-size: 13px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+
+/* --- Field Groups --- */
+
+.vb-field-group {
+	margin-bottom: 20px;
+}
+
+.vb-field-group label {
+	display: block;
+	font-weight: 600;
+	margin-bottom: 6px;
+	color: #1d2327;
+}
+
+.vb-field-group .regular-text {
+	width: 100%;
+}
+
+.vb-input-with-toggle {
+	display: flex;
+	gap: 8px;
+}
+
+.vb-input-with-toggle input {
+	flex: 1;
+}
+
+.vb-input-with-toggle .button {
+	flex-shrink: 0;
+}
+
+/* --- Status Messages --- */
+
+.vb-status {
+	display: inline-block;
+	padding: 4px 12px;
+	border-radius: 4px;
+	font-size: 13px;
+	min-height: 20px;
+}
+
+.vb-status-success {
+	color: #00a32a;
+	background: #edfaef;
+}
+
+.vb-status-error {
+	color: #d63638;
+	background: #fcf0f1;
+}
+
+/* --- Success Screen --- */
+
+.vb-success-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 64px;
+	height: 64px;
+	border-radius: 50%;
+	background: #00a32a;
+	color: #fff;
+	font-size: 32px;
+	margin-bottom: 16px;
+}
+
+/* --- Model Selector --- */
+
+.vb-model-selector {
+	margin: 24px 0;
+	padding: 16px;
+	background: #f6f7f7;
+	border-radius: 6px;
+}
+
+.vb-model-selector label {
+	display: block;
+	font-weight: 600;
+	margin-bottom: 8px;
+}
+
+.vb-model-selector select {
+	width: 100%;
+}
+
+/* --- Step 2 Layout Fix --- */
+
+#vb-step-2 .vb-step-actions {
+	flex-direction: row;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+#vb-step-2 .vb-step-actions .button {
+	min-width: auto;
+}

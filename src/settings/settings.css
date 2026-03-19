@@ -1,0 +1,91 @@
+/* Settings page styles */
+
+.vb-settings {
+  max-width: 700px;
+  margin-top: 16px;
+}
+
+.vb-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 24px;
+}
+
+.vb-tab {
+  padding: 10px 20px;
+  border: 1px solid transparent;
+  border-bottom: none;
+  background: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: #646970;
+  border-radius: 4px 4px 0 0;
+  margin-bottom: -1px;
+}
+
+.vb-tab:hover {
+  color: #2271b1;
+}
+
+.vb-tab-active {
+  color: #1d2327;
+  background: #fff;
+  border-color: #ddd;
+  font-weight: 600;
+}
+
+.vb-tab-content {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-top: none;
+  padding: 24px;
+  border-radius: 0 0 4px 4px;
+}
+
+.vb-panel h3 {
+  margin-top: 0;
+  font-size: 15px;
+  color: #1d2327;
+}
+
+.vb-key-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.vb-key-status-active {
+  background: #edfaef;
+  color: #00a32a;
+}
+
+.vb-key-status-inactive {
+  background: #fcf0f1;
+  color: #d63638;
+}
+
+.vb-status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.vb-model-select {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.vb-save-message {
+  margin-top: 12px;
+  color: #00a32a;
+  font-size: 13px;
+}
