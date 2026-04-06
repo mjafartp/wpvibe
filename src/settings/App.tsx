@@ -543,6 +543,11 @@ export function SettingsApp() {
         setIsEditingKey(false);
         // Reload models with new key
         loadModels();
+        // Redirect to editor after short delay
+        const adminUrl = window.wpvibeData?.adminUrl || '/wp-admin/';
+        setTimeout(() => {
+          window.location.href = `${adminUrl}admin.php?page=wpvibe`;
+        }, 1500);
       } else {
         setKeyMessage({ type: 'error', text: data.message || 'Invalid API key.' });
       }

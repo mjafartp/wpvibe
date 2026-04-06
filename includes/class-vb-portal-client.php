@@ -175,10 +175,16 @@ class VB_Portal_Client {
 			);
 		}
 
+		// Save proxy key for LiteLLM authentication.
+		if ( ! empty( $result['proxy_key'] ) ) {
+			$storage = new VB_Key_Storage();
+			$storage->save_proxy_key( $result['proxy_key'] );
+		}
+
 		return array(
 			'valid'   => true,
 			'message' => __( 'WPVibe service key validated.', 'wpvibe' ),
-			'models'  => $result['models'] ?? array(),
+			'models'  => $this->normalize_models( $result['models'] ?? array() ),
 			'credits' => $result['credits'] ?? 0,
 		);
 	}
@@ -265,6 +271,34 @@ class VB_Portal_Client {
 		set_transient( $cache_key, $announcements, self::ANNOUNCEMENTS_CACHE_TTL );
 
 		return $announcements;
+	}
+
+	/**
+	 * Normalize model data from the portal.
+	 *
+	 * Handles both string arrays (e.g. ['claude-opus-4-6']) and
+	 * object arrays (e.g. [{id: 'claude-opus-4-6', name: '...'}]).
+	 *
+	 * @param array $models Raw models from portal response.
+	 * @return array Normalized model objects.
+	 */
+	private function normalize_models( array $models ): array {
+		return array_map( function ( $m ) {
+			if ( is_string( $m ) ) {
+				return array(
+					'id'          => $m,
+					'name'        => ucwords( str_replace( array( '-', '.' ), array( ' ', '.' ), $m ) ),
+					'description' => '',
+					'recommended' => false,
+				);
+			}
+			return array(
+				'id'          => $m['id'] ?? $m['name'] ?? '',
+				'name'        => $m['name'] ?? $m['id'] ?? '',
+				'description' => $m['description'] ?? '',
+				'recommended' => ! empty( $m['recommended'] ),
+			);
+		}, $models );
 	}
 
 	/**

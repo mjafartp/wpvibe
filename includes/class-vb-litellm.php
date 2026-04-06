@@ -16,7 +16,7 @@ class VB_LiteLLM {
 	/**
 	 * Default LiteLLM proxy endpoint.
 	 */
-	private const DEFAULT_ENDPOINT = 'https://api.wpvibe.io/v1/chat/completions';
+	private const DEFAULT_ENDPOINT = 'https://llm.wpvibe.net/chat/completions';
 
 	/**
 	 * Maximum cURL timeout in seconds.
@@ -144,6 +144,7 @@ class VB_LiteLLM {
 		string $system_prompt,
 		string $api_key,
 		int $max_tokens = 16384,
+		string $request_tag = '',
 	): void {
 		$this->buffer        = '';
 		$this->response_text = '';
@@ -164,12 +165,20 @@ class VB_LiteLLM {
 			$messages
 		);
 
-		$payload = wp_json_encode( array(
+		$request_body = array(
 			'model'      => $model,
 			'max_tokens' => $max_tokens,
 			'stream'     => true,
 			'messages'   => $full_messages,
-		) );
+		);
+
+		if ( '' !== $request_tag ) {
+			$request_body['metadata'] = array(
+				'tags' => array( $request_tag ),
+			);
+		}
+
+		$payload = wp_json_encode( $request_body );
 
 		if ( false === $payload ) {
 			$this->send_sse_event( 'error', error: 'Failed to encode request payload.' );
@@ -333,18 +342,27 @@ class VB_LiteLLM {
 		string $system_prompt,
 		string $api_key,
 		int $max_tokens = 8192,
+		string $request_tag = '',
 	): string {
 		$full_messages = array_merge(
 			array( array( 'role' => 'system', 'content' => $system_prompt ) ),
 			$messages
 		);
 
-		$payload = wp_json_encode( array(
+		$request_body = array(
 			'model'      => $model,
 			'max_tokens' => $max_tokens,
 			'stream'     => false,
 			'messages'   => $full_messages,
-		) );
+		);
+
+		if ( '' !== $request_tag ) {
+			$request_body['metadata'] = array(
+				'tags' => array( $request_tag ),
+			);
+		}
+
+		$payload = wp_json_encode( $request_body );
 
 		if ( false === $payload ) {
 			throw new \RuntimeException( 'Failed to encode request payload.' );

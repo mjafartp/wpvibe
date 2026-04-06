@@ -38,6 +38,26 @@ class VB_Key_Storage {
 	public function delete_key(): void {
 		delete_option( 'wpvibe_api_key' );
 		delete_option( 'wpvibe_key_type' );
+		delete_option( 'wpvibe_proxy_key' );
+	}
+
+	/**
+	 * Save the LiteLLM proxy key returned by the portal.
+	 */
+	public function save_proxy_key( string $key ): void {
+		$encrypted = $this->encrypt( $key );
+		update_option( 'wpvibe_proxy_key', $encrypted, false );
+	}
+
+	/**
+	 * Get the decrypted LiteLLM proxy key.
+	 */
+	public function get_proxy_key(): string {
+		$encrypted = get_option( 'wpvibe_proxy_key', '' );
+		if ( empty( $encrypted ) ) {
+			return '';
+		}
+		return $this->decrypt( $encrypted );
 	}
 
 	/**

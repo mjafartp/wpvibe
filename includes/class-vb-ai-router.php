@@ -83,7 +83,9 @@ class VB_AI_Router {
 					$messages,
 					$model,
 					$system_prompt,
-					$api_key,
+					$this->get_litellm_key( $api_key ),
+					16384,
+					$this->get_key_tag( $api_key ),
 				),
 				default               => $this->send_sse_error(
 					/* translators: %s: the unrecognised key type string. */
@@ -278,12 +280,57 @@ PROMPT;
 				$messages, $model, $system_prompt, $api_key,
 			),
 			'wpvibe_service' => $this->litellm->complete(
-				$messages, $model, $system_prompt, $api_key,
+				$messages, $model, $system_prompt, $this->get_litellm_key( $api_key ),
+				8192, $this->get_key_tag( $api_key ),
 			),
 			default               => throw new \RuntimeException(
 				sprintf( __( 'Unknown API key type: %s', 'wpvibe' ), $key_type )
 			),
 		};
+	}
+
+	/**
+	 * Get the LiteLLM proxy key for service key users.
+	 *
+	 * If no proxy key is stored locally, re-validates the service key
+	 * against the portal to fetch one. Throws if a proxy key cannot
+	 * be obtained — never falls back to the raw vb_live_* key.
+	 *
+	 * @param string $service_key The vb_live_* service key.
+	 * @return string The LiteLLM-compatible sk-* key.
+	 *
+	 * @throws \RuntimeException If a proxy key cannot be obtained.
+	 */
+	private function get_litellm_key( string $service_key ): string {
+		$proxy_key = $this->key_storage->get_proxy_key();
+
+		if ( ! empty( $proxy_key ) ) {
+			return $proxy_key;
+		}
+
+		// No proxy key stored — re-validate to fetch one from the portal.
+		$result = $this->portal->validate_key( $service_key );
+
+		if ( ! empty( $result['valid'] ) ) {
+			$proxy_key = $this->key_storage->get_proxy_key();
+			if ( ! empty( $proxy_key ) ) {
+				return $proxy_key;
+			}
+		}
+
+		throw new \RuntimeException(
+			__( 'Unable to obtain a LiteLLM proxy key. Please re-validate your WPVibe service key in Settings.', 'wpvibe' )
+		);
+	}
+
+	/**
+	 * Get a tag from the vb_live_* key prefix for LiteLLM request tracking.
+	 *
+	 * @param string $api_key The vb_live_* key.
+	 * @return string The key prefix tag (e.g. "vb_live_a1b2").
+	 */
+	private function get_key_tag( string $api_key ): string {
+		return substr( $api_key, 0, 12 );
 	}
 
 	/**
